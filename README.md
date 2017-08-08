@@ -1,4 +1,4 @@
-## @entria/js-codemods
+## @entria/js-codemods [![CircleCI](https://circleci.com/gh/entria/js-codemods.svg?style=svg&circle-token=b3e5c2c1c155d0e044b02bf79fb0236ca92a2feb)](https://circleci.com/gh/entria/js-codemods)
 
 Collection of codemods for Node.js / Javascript used here at [@entria](https://github.com/entria).
 
