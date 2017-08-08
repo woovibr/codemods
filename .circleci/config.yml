@@ -1,0 +1,33 @@
+version: 2
+executorType: docker
+jobs:
+  build:
+    environment:
+      - TEST_REPORT_PATH: "./test-results"
+    working_directory: ~/app
+    docker:
+      - image: node:6.11.1
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+      - run:
+          name: Install Watchman
+          command: |
+            git clone https://github.com/facebook/watchman.git
+            cd watchman
+            git checkout v4.7.0
+            ./autogen.sh && ./configure && make && make install
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run:
+          name: Test
+          command: yarn jest -- --ci
+      - store_test_results:
+          path: $TEST_RESULTS
