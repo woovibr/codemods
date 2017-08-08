@@ -3,7 +3,7 @@ executorType: docker
 jobs:
   build:
     environment:
-      - TEST_REPORT_PATH: "./test-results"
+      - JEST_JUNIT_OUTPUT: "./test-results/junit.xml"
     working_directory: ~/app
     docker:
       - image: node:6.11.1

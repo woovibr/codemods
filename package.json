@@ -18,7 +18,7 @@
     "roots": [
       "transforms"
     ],
-    "testResultsProcessor": "./node_modules/jest-junit-reporter"
+    "testResultsProcessor": "./node_modules/jest-junit"
   },
   "dependencies": {
     "babel-eslint": "^7.2.3",
@@ -29,7 +29,7 @@
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "jest": "^20.0.4",
-    "jest-junit-reporter": "^1.1.0",
+    "jest-junit": "^2.1.0",
     "jscodeshift": "^0.3.32",
     "pre-commit": "^1.2.2",
     "prettier": "^1.5.3"

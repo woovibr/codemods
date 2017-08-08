@@ -2192,10 +2192,12 @@ jest-jasmine2@^20.0.4:
     once "^1.4.0"
     p-map "^1.1.1"
 
-jest-junit-reporter@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jest-junit-reporter/-/jest-junit-reporter-1.1.0.tgz#88d6006ec13f82df40c47882c8640989cdcb1434"
+jest-junit@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-2.1.0.tgz#364194f6529fbf5a900ff02fa6744cb624f4bb54"
   dependencies:
+    mkdirp "^0.5.1"
+    strip-ansi "^4.0.0"
     xml "^1.0.1"
 
 jest-matcher-utils@^20.0.3:
