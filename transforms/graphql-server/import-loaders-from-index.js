@@ -2,8 +2,7 @@ import { lstatSync, readdirSync } from 'fs';
 import { basename, dirname, join } from 'path';
 
 const isDirectory = source => lstatSync(source).isDirectory();
-const getDirectories = source =>
-  readdirSync(source).map(name => join(source, name)).filter(isDirectory);
+const getDirectories = source => readdirSync(source).map(name => join(source, name)).filter(isDirectory);
 
 const getLoaderFolderForPath = (filepath, levels = 0) => {
   const currentDirectoryPath = dirname(filepath);
@@ -40,19 +39,19 @@ export default (fileInfo, api) => {
   }
 
   // let's find the ./loader import
-  let loaderIndexImport = importDeclarations.filter((item) => {
+  let loaderIndexImport = importDeclarations.filter(item => {
     const { node } = item;
 
     return node.source.value.match(/\.\/loader$/);
   });
 
-  const loaderImports = importDeclarations.filter((item) => {
+  const loaderImports = importDeclarations.filter(item => {
     const { node } = item;
 
     return node.source.value.match(/\.\/loader\//);
   });
 
-  loaderImports.forEach((item) => {
+  loaderImports.forEach(item => {
     const importDefaultSpecifier = j(item).find(j.ImportDefaultSpecifier).nodes();
 
     if (!importDefaultSpecifier.length) {
@@ -63,7 +62,8 @@ export default (fileInfo, api) => {
 
     if (!loaderIndexImport.length) {
       loaderIndexImport = j.importDeclaration(
-        [j.importSpecifier(j.identifier(identifierName))], j.literal(loaderFolder),
+        [j.importSpecifier(j.identifier(identifierName))],
+        j.literal(loaderFolder),
       );
       importDeclarations.at(-1).insertBefore(loaderIndexImport);
       loaderIndexImport = j(loaderIndexImport);

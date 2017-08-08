@@ -19,20 +19,14 @@ export default (fileInfo, api, options) => {
   const className = defaultExport.nodes()[0].declaration.id.name;
   const membersRemovedFromClass = ['viewerCanSee'];
 
-  // copied from 
+  // copied from
   // https://github.com/cpojer/js-codemod/blob/90a0081cabfcf371486d126d17fe8f0e8333ce7b/transforms/arrow-function.js#L7
-  const getBodyStatement = (fn) => {
-    if (
-      fn.body.type === 'BlockStatement' &&
-      fn.body.body.length === 1
-    ) {
+  const getBodyStatement = fn => {
+    if (fn.body.type === 'BlockStatement' && fn.body.body.length === 1) {
       const inner = fn.body.body[0];
       const comments = (fn.body.comments || []).concat(inner.comments || []);
 
-      if (
-        options['inline-single-expressions'] &&
-        inner.type === 'ExpressionStatement'
-      ) {
+      if (options['inline-single-expressions'] && inner.type === 'ExpressionStatement') {
         inner.expression.comments = (inner.expression.comments || []).concat(comments);
         return inner.expression;
       } else if (inner.type === 'ReturnStatement') {
@@ -43,18 +37,14 @@ export default (fileInfo, api, options) => {
     return fn.body;
   };
 
-  const createArrowFunctionExpression = (fn) => {
-    const arrowFunction = j.arrowFunctionExpression(
-      fn.params,
-      getBodyStatement(fn),
-      false,
-    );
+  const createArrowFunctionExpression = fn => {
+    const arrowFunction = j.arrowFunctionExpression(fn.params, getBodyStatement(fn), false);
     arrowFunction.async = fn.async;
     arrowFunction.comments = fn.comments;
     return arrowFunction;
   };
 
-  const createNamedExportForItem = (item) => {
+  const createNamedExportForItem = item => {
     const { node } = item;
 
     if (node.static) {
@@ -63,10 +53,13 @@ export default (fileInfo, api, options) => {
         ? currentExportNamedDeclarations.at(-1)
         : defaultExport;
 
-      nodeToInsertAfter.insertAfter(j.exportNamedDeclaration(j.variableDeclaration(
-        'const',
-        [j.variableDeclarator(j.identifier(node.key.name), createArrowFunctionExpression(node.value))],
-      )));
+      nodeToInsertAfter.insertAfter(
+        j.exportNamedDeclaration(
+          j.variableDeclaration('const', [
+            j.variableDeclarator(j.identifier(node.key.name), createArrowFunctionExpression(node.value)),
+          ]),
+        ),
+      );
 
       membersRemovedFromClass.push(node.key.name);
 
@@ -84,7 +77,7 @@ export default (fileInfo, api, options) => {
   }
 
   classProperties.forEach(createNamedExportForItem);
-  classMethods.forEach((item) => {
+  classMethods.forEach(item => {
     const { node } = item;
 
     if (node.kind === 'constructor') {
@@ -92,10 +85,11 @@ export default (fileInfo, api, options) => {
     }
 
     if (node.key.name === 'viewerCanSee') {
-      defaultExport.insertAfter(j.variableDeclaration(
-        'const',
-        [j.variableDeclarator(j.identifier('viewerCanSee'), createArrowFunctionExpression(node.value))],
-      ));
+      defaultExport.insertAfter(
+        j.variableDeclaration('const', [
+          j.variableDeclarator(j.identifier('viewerCanSee'), createArrowFunctionExpression(node.value)),
+        ]),
+      );
       item.prune();
       return;
     }
@@ -104,11 +98,10 @@ export default (fileInfo, api, options) => {
   });
 
   //fix member expressions
-  program.find(j.MemberExpression).forEach((item) => {
+  program.find(j.MemberExpression).forEach(item => {
     const { node } = item;
 
-    if (node.object.name === className
-      && membersRemovedFromClass.indexOf(node.property.name) !== -1) {
+    if (node.object.name === className && membersRemovedFromClass.indexOf(node.property.name) !== -1) {
       j(item).replaceWith(j.identifier(node.property.name));
     }
   });
