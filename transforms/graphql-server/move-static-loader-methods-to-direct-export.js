@@ -4,7 +4,7 @@ export const parser = 'flow';
 export default (fileInfo, api, options) => {
   const j = api.jscodeshift;
 
-  const source = fileInfo.source;
+  const { source } = fileInfo;
   const ast = j(fileInfo.source);
 
   const program = ast.find(j.Program);
@@ -29,7 +29,8 @@ export default (fileInfo, api, options) => {
       if (options['inline-single-expressions'] && inner.type === 'ExpressionStatement') {
         inner.expression.comments = (inner.expression.comments || []).concat(comments);
         return inner.expression;
-      } else if (inner.type === 'ReturnStatement') {
+      }
+      if (inner.type === 'ReturnStatement') {
         inner.argument.comments = (inner.argument.comments || []).concat(comments);
         return inner.argument;
       }
@@ -97,7 +98,7 @@ export default (fileInfo, api, options) => {
     createNamedExportForItem(item);
   });
 
-  //fix member expressions
+  // fix member expressions
   program.find(j.MemberExpression).forEach((item) => {
     const { node } = item;
 
