@@ -40,3 +40,4 @@ Convert from old boilerplate format (where the loader functions were static meth
 ```bash
 jscodeshift -t transforms/graphql-server/move-static-loader-methods-to-direct-export.js <file>
 ```
+
