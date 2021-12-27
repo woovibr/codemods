@@ -5,6 +5,7 @@
   "author": "Jonathan Cardoso Machado <me@jonathancardoso.com>",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
     "test": "jest --maxWorkers=50%",
     "test:ci": "jest --runInBand --forceExit",
     "lint": "eslint ."
@@ -17,6 +18,7 @@
     "eslint": "^4.4.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
+    "husky": "^7.0.0",
     "jest": "^20.0.4",
     "jest-junit": "^2.1.0",
     "jscodeshift": "^0.3.32",
