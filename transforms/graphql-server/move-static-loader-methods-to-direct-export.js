@@ -4,7 +4,7 @@ export const parser = 'flow';
 export default (fileInfo, api, options) => {
   const j = api.jscodeshift;
 
-  const source = fileInfo.source;
+  const { source } = fileInfo;
   const ast = j(fileInfo.source);
 
   const program = ast.find(j.Program);
@@ -21,7 +21,7 @@ export default (fileInfo, api, options) => {
 
   // copied from
   // https://github.com/cpojer/js-codemod/blob/90a0081cabfcf371486d126d17fe8f0e8333ce7b/transforms/arrow-function.js#L7
-  const getBodyStatement = fn => {
+  const getBodyStatement = (fn) => {
     if (fn.body.type === 'BlockStatement' && fn.body.body.length === 1) {
       const inner = fn.body.body[0];
       const comments = (fn.body.comments || []).concat(inner.comments || []);
@@ -29,7 +29,8 @@ export default (fileInfo, api, options) => {
       if (options['inline-single-expressions'] && inner.type === 'ExpressionStatement') {
         inner.expression.comments = (inner.expression.comments || []).concat(comments);
         return inner.expression;
-      } else if (inner.type === 'ReturnStatement') {
+      }
+      if (inner.type === 'ReturnStatement') {
         inner.argument.comments = (inner.argument.comments || []).concat(comments);
         return inner.argument;
       }
@@ -37,14 +38,14 @@ export default (fileInfo, api, options) => {
     return fn.body;
   };
 
-  const createArrowFunctionExpression = fn => {
+  const createArrowFunctionExpression = (fn) => {
     const arrowFunction = j.arrowFunctionExpression(fn.params, getBodyStatement(fn), false);
     arrowFunction.async = fn.async;
     arrowFunction.comments = fn.comments;
     return arrowFunction;
   };
 
-  const createNamedExportForItem = item => {
+  const createNamedExportForItem = (item) => {
     const { node } = item;
 
     if (node.static) {
@@ -77,7 +78,7 @@ export default (fileInfo, api, options) => {
   }
 
   classProperties.forEach(createNamedExportForItem);
-  classMethods.forEach(item => {
+  classMethods.forEach((item) => {
     const { node } = item;
 
     if (node.kind === 'constructor') {
@@ -97,8 +98,8 @@ export default (fileInfo, api, options) => {
     createNamedExportForItem(item);
   });
 
-  //fix member expressions
-  program.find(j.MemberExpression).forEach(item => {
+  // fix member expressions
+  program.find(j.MemberExpression).forEach((item) => {
     const { node } = item;
 
     if (node.object.name === className && membersRemovedFromClass.indexOf(node.property.name) !== -1) {

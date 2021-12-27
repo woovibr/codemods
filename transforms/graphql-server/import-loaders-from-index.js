@@ -1,8 +1,11 @@
 import { lstatSync, readdirSync } from 'fs';
 import { basename, dirname, join } from 'path';
 
-const isDirectory = source => lstatSync(source).isDirectory();
-const getDirectories = source => readdirSync(source).map(name => join(source, name)).filter(isDirectory);
+const isDirectory = (source) => lstatSync(source).isDirectory();
+const getDirectories = (source) =>
+  readdirSync(source)
+    .map((name) => join(source, name))
+    .filter(isDirectory);
 
 const getLoaderFolderForPath = (filepath, levels = 0) => {
   const currentDirectoryPath = dirname(filepath);
@@ -13,7 +16,7 @@ const getLoaderFolderForPath = (filepath, levels = 0) => {
     throw new Error('Cannot find loader folder');
   }
 
-  const hasFoundLoaderPath = directories.some(path => basename(path) === 'loader');
+  const hasFoundLoaderPath = directories.some((path) => basename(path) === 'loader');
 
   if (hasFoundLoaderPath) {
     return levels > 0 ? `${'../'.repeat(levels)}loader` : './loader';
@@ -25,7 +28,7 @@ export const parser = 'flow';
 export default (fileInfo, api) => {
   const j = api.jscodeshift;
 
-  const source = fileInfo.source;
+  const { source } = fileInfo;
   const ast = j(fileInfo.source);
 
   const program = ast.find(j.Program);
@@ -39,19 +42,19 @@ export default (fileInfo, api) => {
   }
 
   // let's find the ./loader import
-  let loaderIndexImport = importDeclarations.filter(item => {
+  let loaderIndexImport = importDeclarations.filter((item) => {
     const { node } = item;
 
     return node.source.value.match(/\.\/loader$/);
   });
 
-  const loaderImports = importDeclarations.filter(item => {
+  const loaderImports = importDeclarations.filter((item) => {
     const { node } = item;
 
     return node.source.value.match(/\.\/loader\//);
   });
 
-  loaderImports.forEach(item => {
+  loaderImports.forEach((item) => {
     const importDefaultSpecifier = j(item).find(j.ImportDefaultSpecifier).nodes();
 
     if (!importDefaultSpecifier.length) {
