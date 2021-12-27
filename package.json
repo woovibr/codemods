@@ -6,6 +6,8 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "jest --maxWorkers=50%",
     "test:ci": "jest --runInBand --forceExit",
     "lint": "eslint ."
