@@ -1,9 +1,9 @@
 {
-  "name": "codemods",
+  "name": "@entria-codemods/root",
   "version": "0.0.1",
   "repository": "https://github.com/entria/codemods",
   "author": "Jonathan Cardoso Machado <me@jonathancardoso.com>",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "prepare": "husky install",
     "test": "jest --maxWorkers=50%",
@@ -22,8 +22,10 @@
     "jest": "^20.0.4",
     "jest-junit": "^2.1.0",
     "jscodeshift": "^0.3.32",
-    "lerna": "^4.0.0",
     "lint-staged": ">=10",
     "prettier": "^1.5.3"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
