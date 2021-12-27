@@ -13,12 +13,10 @@
     "no-use-before-define": 0,
     "consistent-return": 0,
     "spaced-comment": 0,
-    "prefer-const": [ 2, { "destructuring": "all" }],
+    "prefer-const": [2, { "destructuring": "all" }],
     "guard-for-in": 0
   },
-  "plugins": [
-    "import"
-  ],
+  "plugins": ["import"],
   "env": {
     "es6": true,
     "node": true
