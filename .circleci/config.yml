@@ -3,7 +3,7 @@ executorType: docker
 jobs:
   build:
     environment:
-      - JEST_JUNIT_OUTPUT: "./test-results/junit.xml"
+      - JEST_JUNIT_OUTPUT: './test-results/junit.xml'
     working_directory: ~/app
     docker:
       - image: node:6.11.1
@@ -12,8 +12,8 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
       - run:
           name: Install Watchman
           command: |

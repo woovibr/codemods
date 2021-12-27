@@ -20,11 +20,14 @@ comparison.
 ##### import-loaders-from-index
 
 Changes from
+
 ```js
 import MyLoaderA from './loader/MyLoaderA';
 import MyLoaderB from './loader/MyLoaderB';
 ```
+
 to
+
 ```js
 import { MyLoaderA, MyLoaderB } from './loader';
 ```

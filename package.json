@@ -6,6 +6,8 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "jest --maxWorkers=50%",
     "test:ci": "jest --runInBand --forceExit",
     "lint": "eslint ."
@@ -23,7 +25,7 @@
     "jest-junit": "^2.1.0",
     "jscodeshift": "^0.3.32",
     "lint-staged": ">=10",
-    "prettier": "^1.5.3"
+    "prettier": "^2.5.1"
   },
   "workspaces": [
     "packages/*"
