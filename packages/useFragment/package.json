@@ -1,0 +1,5 @@
+{
+  "name": "@codemods/use-fragment",
+  "version": "0.0.1",
+  "main": "./index.ts"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "@codemods/named-graphql-object-type",
+  "version": "0.0.1",
+  "main": "./index.ts"
+}

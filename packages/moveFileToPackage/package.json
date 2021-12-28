@@ -1,0 +1,8 @@
+{
+  "name": "@codemods/move-file-to-package",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "dependencies": {
+    "write-file-atomic": "^3.0.3"
+  }
+}
