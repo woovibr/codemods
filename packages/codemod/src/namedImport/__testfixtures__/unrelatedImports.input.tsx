@@ -1,0 +1,18 @@
+import * as XLSX from 'xlsx';
+
+import {
+  clearDbAndRestartCounters,
+  connectMongoose,
+  createJobExam,
+  createJobExamQuestion,
+  createUser,
+  disconnectMongoose,
+  getContext,
+  sanitizeTestObject,
+} from '../../../../../test/helper';
+
+beforeAll(connectMongoose);
+
+beforeEach(clearDbAndRestartCounters);
+
+afterAll(disconnectMongoose);
