@@ -1,9 +1,8 @@
-import { unique } from '@repo/shared';
-
 import { findImportFilter } from './findImport';
 import { membersMatchingPred } from './membersMatchingPred';
 import { makeImport } from './utils';
 import { sameImport } from './namedImport/sameImport';
+import { unique } from './unique';
 
 // import { User as UserModel } from '@repo/modules'
 // specifier - User

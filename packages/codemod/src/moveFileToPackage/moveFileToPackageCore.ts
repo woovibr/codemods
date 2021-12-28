@@ -16,7 +16,7 @@ import writeFileAtomicCallback from 'write-file-atomic';
 import jscodeshift from 'jscodeshift';
 import Runner from 'jscodeshift/src/Runner';
 
-import { debugConsole } from '@repo/graphql';
+import { debugConsole } from '../debugConsole';
 
 import {
   AddExportConfig,
