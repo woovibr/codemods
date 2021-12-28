@@ -1,0 +1,5 @@
+{
+  "name": "@codemods/new-relay-mock-environment",
+  "version": "0.0.1",
+  "main": "./index.ts"
+}

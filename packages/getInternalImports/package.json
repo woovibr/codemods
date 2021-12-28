@@ -1,0 +1,5 @@
+{
+  "name": "@codemods/get-internal-imports",
+  "version": "0.0.1",
+  "main": "./index.ts"
+}
