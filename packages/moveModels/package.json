@@ -1,0 +1,5 @@
+{
+  "name": "@codemods/move-models",
+  "version": "0.0.1",
+  "main": "./moveModels.ts"
+}

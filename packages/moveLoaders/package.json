@@ -1,0 +1,5 @@
+{
+  "name": "@codemods/move-loaders",
+  "version": "0.0.1",
+  "main": "./moveLoaders.ts"
+}
