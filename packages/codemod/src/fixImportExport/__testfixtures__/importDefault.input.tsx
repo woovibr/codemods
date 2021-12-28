@@ -1,0 +1,1 @@
+import BannedEmailModel from './BannedEmailModel';

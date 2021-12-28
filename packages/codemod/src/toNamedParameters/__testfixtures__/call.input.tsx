@@ -1,0 +1,1 @@
+defineTest('ok', 'great', 'value')
