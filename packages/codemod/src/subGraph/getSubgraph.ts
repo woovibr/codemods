@@ -3,7 +3,7 @@ import fs from 'fs';
 
 import jscodeshift from 'jscodeshift';
 
-import { debugConsole } from '@repo/graphql';
+import { debugConsole } from '../debugConsole';
 
 import getInternalImports from '../getInternalImports/getInternalImports';
 
