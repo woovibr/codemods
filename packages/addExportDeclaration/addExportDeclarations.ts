@@ -50,20 +50,16 @@ export const addExportDeclarations = (
   for (const namedExport of namedExports) {
     const { local, exported } = getLocalAndExported(namedExport);
 
-    const specifier = j.exportSpecifier(
-      j.identifier(local),
-      j.identifier(exported),
-    );
+    const specifier = j.exportSpecifier.from({
+      exported: j.identifier(exported),
+      id: j.identifier(local),
+    });
 
     specifiers = [...specifiers, specifier];
   }
 
   // TODO - avoid exportDeclaration duplication
-  const exportDeclaration = j.exportNamedDeclaration(
-    null,
-    specifiers,
-    j.literal(relativePathname),
-  );
+  const exportDeclaration = j.exportNamedDeclaration(null, specifiers, j.literal(relativePathname));
 
   root.get().node.program.body.push(exportDeclaration);
 

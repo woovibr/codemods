@@ -1,5 +1,3 @@
-// @flow
-
 import DataLoader from 'dataloader';
 
 import type { GraphQLContext } from '../../TypeDefinition';

@@ -2,7 +2,7 @@ import { API, FileInfo, Options } from 'jscodeshift';
 
 import { addNamedImport } from '@codemods/add-named-import';
 
-export const errorField = (node) => {
+export const hasErrorFieldProperty = (node) => {
   if (!node.key) {
     return false;
   }
@@ -23,9 +23,7 @@ export const errorField = (node) => {
     return false;
   }
 
-  const hasTypeProp = node.value.properties.filter(
-    (p) => p.key.type === 'Identifier' && p.key.name === 'type',
-  );
+  const hasTypeProp = node.value.properties.filter((p) => p.key.type === 'Identifier' && p.key.name === 'type');
   const hasResolveProp = node.value.properties.filter(
     (p) =>
       p.key.type === 'Identifier' &&
@@ -86,4 +84,4 @@ function transform(file: FileInfo, api: API, options: Options) {
 }
 
 export const parser = 'tsx';
-export default errorField;
+export default transform;

@@ -1,7 +1,10 @@
 // http://astexplorer.net/
+
+import { API, FileInfo, Options } from 'jscodeshift';
+
 // https://github.com/benjamn/ast-types
-export const parser = 'flow';
-export default (fileInfo, api, options) => {
+export const parser = 'tsx';
+export default (fileInfo: FileInfo, api: API, options: Options) => {
   const j = api.jscodeshift;
 
   const { source } = fileInfo;
@@ -57,7 +60,10 @@ export default (fileInfo, api, options) => {
       nodeToInsertAfter.insertAfter(
         j.exportNamedDeclaration(
           j.variableDeclaration('const', [
-            j.variableDeclarator(j.identifier(node.key.name), createArrowFunctionExpression(node.value)),
+            j.variableDeclarator(
+              j.identifier(node.key.name),
+              createArrowFunctionExpression(node.type === 'ClassProperty' ? node.value : node),
+            ),
           ]),
         ),
       );
@@ -69,7 +75,7 @@ export default (fileInfo, api, options) => {
   };
 
   const classProperties = defaultExportClassBody.find(j.ClassProperty);
-  const classMethods = defaultExportClassBody.find(j.MethodDefinition);
+  const classMethods = defaultExportClassBody.find(j.ClassMethod);
   const hasGetLoader = !!classProperties.filter(({ node }) => node.key.name === 'getLoader').length;
 
   // there is no getLoader, this probably is not a loader file.
@@ -88,7 +94,7 @@ export default (fileInfo, api, options) => {
     if (node.key.name === 'viewerCanSee') {
       defaultExport.insertAfter(
         j.variableDeclaration('const', [
-          j.variableDeclarator(j.identifier('viewerCanSee'), createArrowFunctionExpression(node.value)),
+          j.variableDeclarator(j.identifier('viewerCanSee'), createArrowFunctionExpression(node)),
         ]),
       );
       item.prune();

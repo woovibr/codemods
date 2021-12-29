@@ -61,11 +61,7 @@ export const fixImportExport = (
         return true;
       });
 
-      const exportDeclaration = j.exportNamedDeclaration(
-        null,
-        filteredSpecifiers,
-        j.literal(path.node.source.value),
-      );
+      const exportDeclaration = j.exportNamedDeclaration(null, filteredSpecifiers, j.literal(path.node.source.value));
 
       j(path).replaceWith(exportDeclaration);
     });
@@ -86,15 +82,14 @@ export const fixImportExport = (
 
   if (specifiersToCreate.length > 0) {
     const namedSpecifiers = specifiersToCreate.map((s) =>
-      j.exportSpecifier(j.identifier(s), j.identifier(s)),
+      j.exportSpecifier.from({
+        exported: j.identifier(s),
+        id: j.identifier(s),
+      }),
     );
 
     // create new export declaration
-    const exportDeclaration = j.exportNamedDeclaration(
-      null,
-      namedSpecifiers,
-      j.literal(to),
-    );
+    const exportDeclaration = j.exportNamedDeclaration(null, namedSpecifiers, j.literal(to));
 
     root.get().node.program.body.push(exportDeclaration);
   }
@@ -132,23 +127,15 @@ export const fixImportExport = (
         return true;
       });
 
-      const newImportDeclaration = j.importDeclaration(
-        filtered,
-        j.literal(path.node.source.value),
-      );
+      const newImportDeclaration = j.importDeclaration(filtered, j.literal(path.node.source.value));
 
       j(path).replaceWith(newImportDeclaration);
     });
 
   if (importsToCreate.length > 0) {
-    const importSpecifiers = importsToCreate.map((i) =>
-      j.importSpecifier(j.identifier(i)),
-    );
+    const importSpecifiers = importsToCreate.map((i) => j.importSpecifier(j.identifier(i)));
 
-    const newImportDeclaration = j.importDeclaration(
-      importSpecifiers,
-      j.literal(to),
-    );
+    const newImportDeclaration = j.importDeclaration(importSpecifiers, j.literal(to));
 
     const imports = root.find(j.ImportDeclaration);
 
