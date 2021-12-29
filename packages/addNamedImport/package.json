@@ -1,5 +1,11 @@
 {
   "name": "@codemods/add-named-import",
   "version": "0.0.1",
-  "main": "index.ts"
+  "main": "index.ts",
+  "dependencies": {
+    "@codemods/find-import": "^0.0.1",
+    "@codemods/members-matching-pred": "^0.0.1",
+    "@codemods/named-import": "^0.0.1",
+    "@codemods/utils": "^0.0.1"
+  }
 }

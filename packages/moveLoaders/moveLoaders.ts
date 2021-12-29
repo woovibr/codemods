@@ -1,12 +1,12 @@
 import path from 'path';
 
-import getInternalImports from '../getInternalImports/getInternalImports';
-import { getRelativePath } from '../subGraph/getRelativePath';
-import { getFilename } from '../subGraph/getFilename';
+import getInternalImports from '@codemods/get-internal-imports/getInternalImports';
+import { getRelativePath } from '@codemods/sub-graph/getRelativePath';
+import { getFilename } from '@codemods/sub-graph/getFilename';
 
-import { runCodemodFile } from '../moveFileToPackage/runCodemodFile';
-import getInternalExportsSource from '../moveFileToPackage/getInternalExportsSource';
-import { moveFileToPackage } from '../moveFileToPackage/moveFileToPackageCore';
+import { runCodemodFile } from '@codemods/move-file-to-package/runCodemodFile';
+import getInternalExportsSource from '@codemods/move-file-to-package/getInternalExportsSource';
+import { moveFileToPackage } from '@codemods/move-file-to-package/moveFileToPackageCore';
 
 const cwd = process.cwd();
 
@@ -43,25 +43,17 @@ const cwd = process.cwd();
         continue;
       }
 
-      const internalImports = await runCodemodFile(
-        getInternalImports,
-        loaderWithExtension,
-      );
+      const internalImports = await runCodemodFile(getInternalImports, loaderWithExtension);
 
       if (internalImports.length > 0) {
         // eslint-disable-next-line
-        const imports = internalImports.map((i) =>
-          getRelativePath(loaderPath, i.source.value),
-        );
+        const imports = internalImports.map((i) => getRelativePath(loaderPath, i.source.value));
 
         // eslint-disable-next-line
-        console.log(
-          'sent run codemod on model because it has internal imports',
-          {
-            loader,
-            // imports,
-          },
-        );
+        console.log('sent run codemod on model because it has internal imports', {
+          loader,
+          // imports,
+        });
         continue;
       }
 
