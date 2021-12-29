@@ -1,5 +1,9 @@
 {
   "name": "@codemods/sub-graph",
   "version": "0.0.1",
-  "main": "./index.ts"
+  "main": "./index.ts",
+  "dependencies": {
+    "@codemods/get-internal-imports": "^0.0.1",
+    "@codemods/utils": "^0.0.1"
+  }
 }

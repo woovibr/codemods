@@ -1,5 +1,8 @@
 {
   "name": "@codemods/node-interface",
   "version": "0.0.1",
-  "main": "./index.ts"
+  "main": "./index.ts",
+  "dependencies": {
+    "@codemods/add-import-to-body": "^0.0.1"
+  }
 }

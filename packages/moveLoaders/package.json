@@ -1,5 +1,10 @@
 {
   "name": "@codemods/move-loaders",
   "version": "0.0.1",
-  "main": "./moveLoaders.ts"
+  "main": "./moveLoaders.ts",
+  "dependencies": {
+    "@codemods/get-internal-imports": "^0.0.1",
+    "@codemods/move-file-to-package": "^0.0.1",
+    "@codemods/sub-graph": "^0.0.1"
+  }
 }

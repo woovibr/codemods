@@ -1,5 +1,8 @@
 {
   "name": "@codemods/utils",
   "version": "0.0.1",
-  "main": "index.ts"
+  "main": "index.ts",
+  "dependencies": {
+    "@codemods/members-matching-pred": "^0.0.1"
+  }
 }
