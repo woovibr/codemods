@@ -102,10 +102,7 @@ export const getNamedExportsFromFile = async (file: string) => {
   return namedExports;
 };
 
-export const addExports = async (
-  file: string,
-  exportConfig: AddExportConfig,
-) => {
+export const addExports = async (file: string, exportConfig: AddExportConfig) => {
   const content = await readFile(file);
   const source = content.toString();
 
@@ -132,10 +129,7 @@ export const addExports = async (
 
 export const fixNamedImports = async ({ filesToCodemod, config }) => {
   // named import codemod
-  const addNamedImportPath = path.join(
-    cwd,
-    './packages/codemod/src/namedImport/NamedImport.ts',
-  );
+  const addNamedImportPath = path.join(cwd, './packages/codemod/src/namedImport/NamedImport.ts');
 
   const options = {
     transform: addNamedImportPath,
@@ -159,15 +153,9 @@ export const fixNamedImports = async ({ filesToCodemod, config }) => {
   console.log('runner namedImport finished: ', r);
 };
 
-export const fixDefaultNamespaceImports = async ({
-  filesToCodemod,
-  config,
-}) => {
+export const fixDefaultNamespaceImports = async ({ filesToCodemod, config }) => {
   // default/namespace import codemod
-  const importMapperPath = path.join(
-    cwd,
-    './packages/codemod/src/importMapper/ImportMapper.ts',
-  );
+  const importMapperPath = path.join(cwd, './packages/codemod/src/importMapper/ImportMapper.ts');
 
   const options = {
     transform: importMapperPath,
@@ -191,10 +179,7 @@ export const fixDefaultNamespaceImports = async ({
   console.log('runner default/namespace import finished: ', r);
 };
 
-export const fixModuleRelativeImports = async (
-  config: MoveFileConfig,
-  configWithoutFullpath: MoveFileConfig,
-) => {
+export const fixModuleRelativeImports = async (config: MoveFileConfig, configWithoutFullpath: MoveFileConfig) => {
   const toSrc = path.join(config.toPackage, './src');
   const toSrcGlob = `${toSrc}/**`;
 
@@ -211,10 +196,7 @@ export const fixModuleRelativeImports = async (
   };
 
   // fix own module reference
-  const moduleToRelativePath = path.join(
-    cwd,
-    './packages/codemod/src/moduleToRelative/ModuleToRelative.ts',
-  );
+  const moduleToRelativePath = path.join(cwd, './packages/codemod/src/moduleToRelative/ModuleToRelative.ts');
 
   const options = {
     transform: moduleToRelativePath,
@@ -238,9 +220,7 @@ export const fixModuleRelativeImports = async (
   console.log('runner moduleToRelativePath finished: ', r);
 };
 
-export const moveFileToPackage = async (
-  configWithoutFullpath: MoveFileConfig,
-) => {
+export const moveFileToPackage = async (configWithoutFullpath: MoveFileConfig) => {
   const config = getConfig(configWithoutFullpath);
 
   // eslint-disable-next-line
@@ -281,7 +261,8 @@ export const moveFileToPackage = async (
     // out === source
 
     // save new named exports on new module index file
-    await writeFileAtomic(toPackageIndex, out);
+    fs.writeFileSync(toPackageIndex, out);
+    // await writeFileAtomic(toPackageIndex, out);
 
     // eslint-disable-next-line
     console.log(`${toPackageIndex} updated with new exports`);
