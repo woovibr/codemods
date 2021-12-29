@@ -1,10 +1,7 @@
 import path from 'path';
 
-// TODO: fix `tempy` parsing, jest can't parse modules from dependency, even with babel
-// import tempy from 'tempy';
+import tempy from 'tempy';
 import fs from 'fs-extra';
-
-declare const tempy: any;
 
 const initFixture = (startDir: string) => async (fixturePath: string) => {
   const cwd = tempy.directory();
