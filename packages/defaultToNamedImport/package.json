@@ -1,0 +1,8 @@
+{
+  "name": "@codemods/default-to-named-import",
+  "version": "0.0.1",
+  "main": "./index.ts",
+  "dependencies": {
+    "@codemods/utils": "^0.0.1"
+  }
+}

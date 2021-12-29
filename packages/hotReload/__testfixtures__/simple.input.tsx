@@ -1,0 +1,1 @@
+export default hot(CompanyAdd);

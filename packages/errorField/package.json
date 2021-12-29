@@ -1,0 +1,8 @@
+{
+  "name": "@codemods/error-field",
+  "version": "0.0.1",
+  "main": "./index.ts",
+  "dependencies": {
+    "@codemods/add-named-import": "^0.0.1"
+  }
+}

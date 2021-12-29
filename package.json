@@ -1,47 +1,39 @@
 {
-  "name": "@entria/js-codemods",
+  "name": "codemods",
   "version": "0.0.1",
-  "main": "index.js",
-  "repository": "entria/js-codemods",
   "author": "Jonathan Cardoso Machado <me@jonathancardoso.com>",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.5",
+    "@types/jest": "^27.0.3",
+    "@types/jscodeshift": "^0.11.3",
+    "@types/node": "^17.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "babel-jest": "^27.4.5",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "husky": "^7.0.0",
+    "jest": "^27.4.5",
+    "jest-junit": "^13.0.0",
+    "jscodeshift": "^0.13.0",
+    "lint-staged": ">=10",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
+  },
+  "private": true,
+  "repository": "https://github.com/entria/codemods",
   "scripts": {
-    "test": "jest --runInBand --forceExit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint": "eslint .",
-    "lint:staged": "lint-staged",
-    "prettier": "prettier --write --single-quote true --trailing-comma all --print-width 120",
-    "prettier:all": "yarn prettier -- ./transforms/**/*.js"
+    "prepare": "husky install",
+    "test": "jest --maxWorkers=50%",
+    "test:ci": "jest --runInBand --forceExit"
   },
-  "license": "MIT",
-  "jest": {
-    "globals": {
-      "baseDir": "../"
-    },
-    "testEnvironment": "node",
-    "roots": [
-      "transforms"
-    ],
-    "testResultsProcessor": "./node_modules/jest-junit"
-  },
-  "dependencies": {
-    "babel-eslint": "^7.2.3",
-    "babel-jest": "^20.0.3",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "eslint": "^4.4.1",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "jest": "^20.0.4",
-    "jest-junit": "^2.1.0",
-    "jscodeshift": "^0.3.32",
-    "lint-staged": "^4.0.3",
-    "pre-commit": "^1.2.2",
-    "prettier": "^1.5.3"
-  },
-  "lint-staged": {
-    "*.js": [
-      "yarn prettier",
-      "git add"
-    ]
-  },
-  "pre-commit": "lint:staged"
+  "workspaces": [
+    "packages/*"
+  ]
 }

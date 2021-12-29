@@ -1,0 +1,8 @@
+{
+  "name": "@codemods/get-object-id",
+  "version": "0.0.1",
+  "main": "./getObjectId.ts",
+  "dependencies": {
+    "@codemods/add-named-import": "^0.0.1"
+  }
+}

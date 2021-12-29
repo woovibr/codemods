@@ -1,0 +1,5 @@
+{
+  "name": "@codemods/graphql-server",
+  "version": "0.0.1",
+  "main": "./index.js"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "@codemods/fix-import-export",
+  "version": "0.0.1",
+  "main": "./index.ts",
+  "dependencies": {
+    "@codemods/named-import": "^0.0.1",
+    "@codemods/utils": "^0.0.1"
+  }
+}

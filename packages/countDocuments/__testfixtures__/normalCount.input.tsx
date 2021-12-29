@@ -1,0 +1,1 @@
+const count = result?.[0]?.count;
