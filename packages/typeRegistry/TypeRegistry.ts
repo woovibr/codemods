@@ -15,10 +15,7 @@ export const loaderExists = (loaderName: string, file) => {
   const loaderImportName = `./${loaderName}`;
 
   // check if file exists
-  const loaderPath = join(
-    dirname(join(cwd, file.path)),
-    `${loaderImportName}.ts`,
-  );
+  const loaderPath = join(dirname(join(cwd, file.path)), `${loaderImportName}.ts`);
 
   if (!fs.existsSync(loaderPath)) {
     // eslint-disable-next-line
@@ -87,9 +84,7 @@ export function typeRegistry(file: FileInfo, api: API, options: Options) {
     newImport: registerTypeLoaderDeclaration,
   });
 
-  const hasLoaderImport = root
-    .find(j.ImportNamespaceSpecifier)
-    .filter((path) => path.node.local.name === loaderName);
+  const hasLoaderImport = root.find(j.ImportNamespaceSpecifier).filter((path) => path.node.local.name === loaderName);
 
   if (hasLoaderImport.length === 0) {
     const loaderImportDeclaration = j.importDeclaration(
@@ -119,4 +114,4 @@ export function typeRegistry(file: FileInfo, api: API, options: Options) {
 }
 
 export const parser = 'tsx';
-export default transform;
+export default typeRegistry;

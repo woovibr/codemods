@@ -1,5 +1,3 @@
-// @flow
-
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 import { globalIdField } from 'graphql-relay';
 import { NodeInterface } from '../interface/NodeInterface';
@@ -7,7 +5,10 @@ import { NodeInterface } from '../interface/NodeInterface';
 import JobType from './JobType';
 
 import GroupType from './GroupType';
-import { GroupLoader, JobLoader } from './loader';
+
+import ProfileImageType from './ProfileImageType';
+
+import { GroupLoader, JobLoader, ProfileImageLoader } from './loader';
 
 export default new GraphQLObjectType({
   name: 'Person',
@@ -28,6 +29,11 @@ export default new GraphQLObjectType({
       type: GroupType,
       description: 'Person group',
       resolve: (obj, args, context) => GroupLoader.load(context, obj.group),
+    },
+    profileImage: {
+      type: ProfileImageType,
+      description: 'Person profile image',
+      resolve: (obj, args, context) => ProfileImageLoader.load(context, obj.profileImage),
     },
   }),
   interfaces: () => [NodeInterface],

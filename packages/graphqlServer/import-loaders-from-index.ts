@@ -24,7 +24,7 @@ const getLoaderFolderForPath = (filepath, levels = 0) => {
   return getLoaderFolderForPath(currentDirectoryPath, levels + 1);
 };
 
-export const parser = 'flow';
+export const parser = 'tsx';
 export default (fileInfo, api) => {
   const j = api.jscodeshift;
 
@@ -81,7 +81,7 @@ export default (fileInfo, api) => {
   loaderIndexImport.get('specifiers').value.sort((a, b) => {
     const objA = a.local || a.imported;
     const objB = b.local || b.imported;
-    return objA.name > objB.name;
+    return objA.name > objB.name ? 1 : -1;
   });
 
   return ast.toSource({ quote: 'single', lineTerminator: '\n' });
