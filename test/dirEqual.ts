@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export default function dirEqual(expected: string, actual: string) {
+export const dirEqual = (expected: string, actual: string) => {
   const actualStat = fs.statSync(actual);
   const expectedStat = fs.statSync(expected);
 
@@ -27,4 +27,4 @@ export default function dirEqual(expected: string, actual: string) {
     // eslint-disable-next-line no-console
     console.log(`Unexpected type of "${expected}", it's not directory or file.`);
   }
-}
+};

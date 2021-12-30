@@ -3,7 +3,7 @@ import path from 'path';
 import tempy from 'tempy';
 import fs from 'fs-extra';
 
-import dirEqual from '../../../test/dirEqual';
+import { dirEqual } from '../../../test/dirEqual';
 
 const initFixture = async (fixturePath: string) => {
   const cwd = tempy.directory();
