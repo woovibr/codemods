@@ -3,18 +3,19 @@ import path from 'path';
 import tempy from 'tempy';
 import fs from 'fs-extra';
 
-const initFixture = (startDir: string) => async (fixturePath: string) => {
+import { dirEqual } from '../../../test/dirEqual';
+
+const initFixture = async (fixturePath: string) => {
   const cwd = tempy.directory();
 
-  process.chdir(startDir);
+  process.chdir(cwd);
 
-  await fs.copy(cwd, fixturePath);
+  await fs.copy(fixturePath, cwd);
 
   return cwd;
 };
 
-it.skip('should move simpleFn', async () => {
-  // eslint-disable-next-line
+it('should move simpleFn', async () => {
   const config = {
     from: 'packages/main/src/simpleFn.ts',
     fromPackage: 'packages/main',
@@ -23,12 +24,18 @@ it.skip('should move simpleFn', async () => {
     toPackageName: '@test/modules',
   };
 
-  const fixturePath = path.join(__dirname, '../__fixtures__/simpleNamed');
+  const fixturePath = path.join(__dirname, '../__fixtures__/simpleNamedInput');
+  const outputPath = path.join(__dirname, '../__fixtures__/simpleNamedOutput');
 
-  const cwd = await initFixture(__dirname)(fixturePath);
+  const cwd = await initFixture(fixturePath);
 
-  // eslint-disable-next-line
-  console.log('cwd: ', cwd);
+  try {
+    await require('..').moveFileToPackage(config);
 
-  expect(1).toBe(1);
+    dirEqual(outputPath, cwd);
+  } finally {
+    console.log(`Deleting ${cwd}`);
+
+    await fs.rm(cwd, { recursive: true, force: true });
+  }
 });
