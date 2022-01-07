@@ -15,16 +15,6 @@ const initFixture = async (fixturePath: string) => {
   return cwd;
 };
 
-let cwd: string;
-
-afterEach(async () => {
-  if (cwd) {
-    console.log(`Deleting ${cwd}`);
-
-    await fs.rm(cwd, { recursive: true, force: true });
-  }
-});
-
 it('should move simpleFn', async () => {
   const config = {
     from: 'packages/main/src/simpleFn.ts',
@@ -37,9 +27,15 @@ it('should move simpleFn', async () => {
   const fixturePath = path.join(__dirname, '../__fixtures__/simpleNamedInput');
   const outputPath = path.join(__dirname, '../__fixtures__/simpleNamedOutput');
 
-  cwd = await initFixture(fixturePath);
+  const cwd = await initFixture(fixturePath);
 
-  await require('..').moveFileToPackage(config);
+  try {
+    await require('..').moveFileToPackage(config);
 
-  dirEqual(outputPath, cwd);
+    dirEqual(outputPath, cwd);
+  } finally {
+    console.log(`Deleting ${cwd}`);
+
+    await fs.rm(cwd, { recursive: true, force: true });
+  }
 });
