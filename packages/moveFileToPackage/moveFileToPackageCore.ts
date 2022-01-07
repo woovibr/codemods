@@ -155,7 +155,7 @@ export const fixNamedImports = async ({ filesToCodemod, config }) => {
 
 export const fixDefaultNamespaceImports = async ({ filesToCodemod, config }) => {
   // default/namespace import codemod
-  const importMapperPath = path.join(cwd, './packages/codemod/src/importMapper/ImportMapper.ts');
+  const importMapperPath = path.join(__dirname, '../importMapper/ImportMapper.ts');
 
   const options = {
     transform: importMapperPath,
@@ -218,6 +218,33 @@ export const fixModuleRelativeImports = async (config: MoveFileConfig, configWit
 
   // eslint-disable-next-line
   console.log('runner moduleToRelativePath finished: ', r);
+};
+
+export const fixPackageExports = async (filesToCodemod: string[], config: MoveFileConfig) => {
+  const fixPackageExportsPath = path.join(__dirname, './fixPackageExports.ts');
+
+  const options = {
+    transform: fixPackageExportsPath,
+    verbose: 0,
+    dry: false,
+    print: false,
+    babel: true,
+    extensions: 'js',
+    ignorePattern: [],
+    ignoreConfig: [],
+    runInBand: false,
+    silent: false,
+    parser: 'babel',
+    stdin: false,
+    testConfig: config,
+    from: config.from,
+    toPackageName: config.toPackageName,
+  };
+
+  const r = await Runner.run(fixPackageExportsPath, filesToCodemod, options);
+
+  // eslint-disable-next-line
+  console.log('runner fixPackageExports finished: ', r);
 };
 
 export const moveFileToPackage = async (configWithoutFullpath: MoveFileConfig) => {
@@ -360,6 +387,8 @@ export const moveFileToPackage = async (configWithoutFullpath: MoveFileConfig) =
 
   // fix internal imports
   await fixModuleRelativeImports(config, configWithoutFullpath);
+
+  await fixPackageExports(filesToCodemod, config);
 
   await unlink(config.from);
 };
