@@ -237,8 +237,7 @@ export const fixPackageExports = async (filesToCodemod: string[], config: MoveFi
     parser: 'babel',
     stdin: false,
     testConfig: config,
-    from: config.from,
-    toPackageName: config.toPackageName,
+    config,
   };
 
   const r = await Runner.run(fixPackageExportsPath, filesToCodemod, options);
