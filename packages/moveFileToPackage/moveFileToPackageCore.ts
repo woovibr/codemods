@@ -129,7 +129,7 @@ export const addExports = async (file: string, exportConfig: AddExportConfig) =>
 
 export const fixNamedImports = async ({ filesToCodemod, config }) => {
   // named import codemod
-  const addNamedImportPath = path.join(cwd, './packages/codemod/src/namedImport/NamedImport.ts');
+  const addNamedImportPath = path.join(__dirname, '../namedImport/NamedImport.ts');
 
   const options = {
     transform: addNamedImportPath,
@@ -196,7 +196,7 @@ export const fixModuleRelativeImports = async (config: MoveFileConfig, configWit
   };
 
   // fix own module reference
-  const moduleToRelativePath = path.join(cwd, './packages/codemod/src/moduleToRelative/ModuleToRelative.ts');
+  const moduleToRelativePath = path.join(__dirname, '../moduleToRelative/ModuleToRelative.ts');
 
   const options = {
     transform: moduleToRelativePath,
