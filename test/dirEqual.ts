@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 
+const ignoredContents = ['node_modules'];
+const ignoreContent = (name: string) => !ignoredContents.includes(name);
+
 export const dirEqual = (expected: string, actual: string) => {
   const actualStat = fs.statSync(actual);
   const expectedStat = fs.statSync(expected);
@@ -8,8 +11,8 @@ export const dirEqual = (expected: string, actual: string) => {
   if (expectedStat.isDirectory()) {
     expect(actualStat.isDirectory()).toBe(true);
 
-    const expectedContent = fs.readdirSync(expected);
-    const actualContent = fs.readdirSync(actual);
+    const expectedContent = fs.readdirSync(expected).filter(ignoreContent);
+    const actualContent = fs.readdirSync(actual).filter(ignoreContent);
 
     expect(actualContent).toStrictEqual(expectedContent);
 
