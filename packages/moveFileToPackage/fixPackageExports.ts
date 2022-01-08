@@ -46,15 +46,12 @@ const transform = (file: FileInfo, { j }: API, options: Options) => {
       );
 
       if (hasNamespaceSpecifier) {
-        /**
-         * TODO: Return an `ExportNamedDeclaration` as expected.
-         * For some reason, when we return an `ExportNamedDeclaration` in this case, the file
-         * output stays the same. Even the other modifications.
-         */
-        return undefined;
-        // return j.exportNamedDeclaration(null, [
-        //   j.exportSpecifier(j.identifier(config.namespaceName), j.identifier(config.namespaceName)),
-        // ]);
+        return j.exportNamedDeclaration(null, [
+          j.exportSpecifier.from({
+            exported: j.identifier(config.namespaceName),
+            local: j.identifier(config.namespaceName),
+          }),
+        ]);
       }
 
       return j.exportNamedDeclaration(
