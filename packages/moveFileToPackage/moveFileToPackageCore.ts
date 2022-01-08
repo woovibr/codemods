@@ -21,6 +21,7 @@ import { debugConsole, getRelativePathnameFromConfig } from '@codemods/utils';
 
 import { getFilepathsFromGlob } from './getFilepathsFromGlob';
 import { createFoldersRecursive } from './createFoldersRecursive';
+import { addNamespaceExportDeclaration } from './addNamespaceExport';
 
 const cwd = process.cwd();
 
@@ -237,14 +238,38 @@ export const fixPackageExports = async (filesToCodemod: string[], config: MoveFi
     parser: 'babel',
     stdin: false,
     testConfig: config,
-    from: config.from,
-    toPackageName: config.toPackageName,
+    config,
   };
 
   const r = await Runner.run(fixPackageExportsPath, filesToCodemod, options);
 
   // eslint-disable-next-line
   console.log('runner fixPackageExports finished: ', r);
+};
+
+export const addNamespaceExport = async (file: string, exportConfig) => {
+  const content = await readFile(file);
+  const source = content.toString();
+
+  const options = {
+    config: exportConfig,
+  };
+
+  const out = addNamespaceExportDeclaration(
+    {
+      path: file,
+      source,
+    },
+    {
+      j,
+      jscodeshift: j,
+      stats: options.dry ? stats : empty,
+      report: (msg) => report(file, msg),
+    },
+    options,
+  );
+
+  return out;
 };
 
 export const moveFileToPackage = async (configWithoutFullpath: MoveFileConfig) => {
@@ -275,6 +300,8 @@ export const moveFileToPackage = async (configWithoutFullpath: MoveFileConfig) =
     namedExports,
   });
 
+  let out;
+
   if (!config.namespaceName) {
     const addExportConfig = {
       namedExports,
@@ -282,22 +309,25 @@ export const moveFileToPackage = async (configWithoutFullpath: MoveFileConfig) =
     };
 
     // add named export
-    const out = await addExports(toPackageIndex, addExportConfig);
+    out = await addExports(toPackageIndex, addExportConfig);
 
     // check if the source is the same
     // out === source
+  } else {
+    const addNamespaceExportConfig = {
+      name: config.namespaceName,
+      relativePathname: getRelativePathnameFromConfig(config),
+    };
 
-    // save new named exports on new module index file
-    fs.writeFileSync(toPackageIndex, out);
-    // await writeFileAtomic(toPackageIndex, out);
-
-    // eslint-disable-next-line
-    console.log(`${toPackageIndex} updated with new exports`);
+    out = await addNamespaceExport(toPackageIndex, addNamespaceExportConfig);
   }
-  /** TODO - implement
-   * import * as IndustryLoader
-   * export { IndustryLoader }
-   */
+
+  // save new named exports on new module index file
+  fs.writeFileSync(toPackageIndex, out);
+  // await writeFileAtomic(toPackageIndex, out);
+
+  // eslint-disable-next-line
+  console.log(`${toPackageIndex} updated with new exports`);
 
   // copy from -> to
   // create all folders recursive if needed

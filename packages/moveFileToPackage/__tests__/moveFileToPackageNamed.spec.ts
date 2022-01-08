@@ -5,6 +5,8 @@ import fs from 'fs-extra';
 
 import { dirEqual } from '../../../test/dirEqual';
 
+// TODO: create utils for working with directory testing
+// TODO: move initFixture to utils
 const initFixture = async (fixturePath: string) => {
   const cwd = tempy.directory();
 
@@ -15,7 +17,7 @@ const initFixture = async (fixturePath: string) => {
   return cwd;
 };
 
-it('should move simpleFn', async () => {
+it.skip('should move simpleFn', async () => {
   const config = {
     from: 'packages/main/src/simpleFn.ts',
     fromPackage: 'packages/main',

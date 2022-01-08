@@ -35,7 +35,7 @@ export const getExportMapDeclaration = (
     .forEach((path) => {
       path.node.specifiers.map((s) => {
         exportToSource[s.exported.name] = {
-          local: s.local.name,
+          local: s.local?.name,
           exported: s.exported.name,
           source: path.node.source.value,
         };
