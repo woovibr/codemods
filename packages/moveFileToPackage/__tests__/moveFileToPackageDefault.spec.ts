@@ -17,17 +17,18 @@ const initFixture = async (fixturePath: string) => {
   return cwd;
 };
 
-it('should move simpleFn', async () => {
+it('should move default simple', async () => {
   const config = {
-    from: 'packages/main/src/simpleFn.ts',
+    from: 'packages/main/src/simple.ts',
     fromPackage: 'packages/main',
-    to: 'packages/modules/src/simpleFn.ts',
+    to: 'packages/modules/src/simple.ts',
     toPackage: 'packages/modules',
     toPackageName: '@test/modules',
+    defaultName: 'simpleFn',
   };
 
-  const fixturePath = path.join(__dirname, '../__fixtures__/simpleNamedInput');
-  const outputPath = path.join(__dirname, '../__fixtures__/simpleNamedOutput');
+  const fixturePath = path.join(__dirname, '../__fixtures__/simpleDefaultInput');
+  const outputPath = path.join(__dirname, '../__fixtures__/simpleDefaultOutput');
 
   const cwd = await initFixture(fixturePath);
 
