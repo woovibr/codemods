@@ -17,7 +17,7 @@ const initFixture = async (fixturePath: string) => {
   return cwd;
 };
 
-it('should move simpleFn', async () => {
+it.skip('should move simpleFn', async () => {
   const config = {
     from: 'packages/main/src/simpleFn.ts',
     fromPackage: 'packages/main',

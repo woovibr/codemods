@@ -17,7 +17,7 @@ const initFixture = async (fixturePath: string) => {
   return cwd;
 };
 
-it('should move simple namespace', async () => {
+it.skip('should move simple namespace', async () => {
   const config = {
     from: 'packages/main/src/Simple.ts',
     fromPackage: 'packages/main',
