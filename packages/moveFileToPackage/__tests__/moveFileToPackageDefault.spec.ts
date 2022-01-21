@@ -17,7 +17,7 @@ const initFixture = async (fixturePath: string) => {
   return cwd;
 };
 
-it('should move default simple', async () => {
+it.skip('should move default simple', async () => {
   const config = {
     from: 'packages/main/src/simple.ts',
     fromPackage: 'packages/main',
