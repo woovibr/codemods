@@ -8,16 +8,16 @@ export default {
   authenticatedOnly: true,
 };
 ```
-    
+
  to
- 
+
  ```jsx
 export default {
   ...mutation,
    extensions: {
        authenticatedOnly: true,
     },
-}; 
+};
 ```
 
 ## Usage
