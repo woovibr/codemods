@@ -9,7 +9,7 @@
     "@codemods/sub-graph": "^0.0.1",
     "@codemods/utils": "^0.0.1",
     "fs-extra": "^10.1.0",
-    "tempy": "^2.0.0",
+    "tempy": "^3.0.0",
     "write-file-atomic": "^4.0.1"
   },
   "devDependencies": {
