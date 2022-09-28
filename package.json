@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Jonathan Cardoso Machado <me@jonathancardoso.com>",
   "devDependencies": {
-    "@babel/preset-env": "^7.19.1",
+    "@babel/preset-env": "^7.19.3",
     "@types/jest": "^27.5.0",
     "@types/jscodeshift": "^0.11.5",
     "@types/node": "^18.7.23",
