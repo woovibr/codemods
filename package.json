@@ -5,7 +5,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
     "@types/jest": "^27.5.0",
-    "@types/jscodeshift": "^0.11.5",
+    "@types/jscodeshift": "^0.11.6",
     "@types/node": "^18.11.12",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
