@@ -8,11 +8,11 @@
     "@codemods/get-internal-imports": "^0.0.1",
     "@codemods/sub-graph": "^0.0.1",
     "@codemods/utils": "^0.0.1",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.1",
     "tempy": "^2.0.0",
     "write-file-atomic": "^4.0.2"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.13"
+    "@types/fs-extra": "^11.0.1"
   }
 }
